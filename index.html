@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>아이밥상 🍼 유아식 레시피 추천</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --mint: #6dd5c2;
+      --mint-light: #e8f8f5;
+      --mint-mid: #b2ebe3;
+      --peach: #ffb3a7;
+      --peach-light: #fff0ee;
+      --yellow: #ffd87a;
+      --yellow-light: #fff9e6;
+      --purple: #c3b1e1;
+      --text: #3d3d3d;
+      --muted: #888;
+      --bg: #fafaf8;
+      --card: #ffffff;
+      --border: #e8e8e8;
+      --shadow: 0 4px 20px rgba(0,0,0,0.07);
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── 헤더 ── */
+    header {
+      background: linear-gradient(135deg, #a8eddb 0%, #ffd6cc 100%);
+      padding: 32px 24px 24px;
+      text-align: center;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.6);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem;
+      color: #555;
+      margin-bottom: 10px;
+      backdrop-filter: blur(4px);
+    }
+    header h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #2d6a5a;
+      letter-spacing: -0.5px;
+    }
+    header p {
+      font-size: 0.88rem;
+      color: #4a7a6e;
+      margin-top: 6px;
+    }
+    .accounts-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .account-chip {
+      background: rgba(255,255,255,0.7);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.75rem;
+      color: #2d6a5a;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .account-chip:hover { background: rgba(255,255,255,0.9); }
+
+    /* ── 메인 컨테이너 ── */
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    /* ── 입력 카드 ── */
+    .input-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    /* ── 태그 입력 ── */
+    .tag-input-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      min-height: 52px;
+      cursor: text;
+      transition: border-color 0.2s;
+    }
+    .tag-input-wrap:focus-within {
+      border-color: var(--mint);
+    }
+    .tag {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--mint-light);
+      color: #2d6a5a;
+      border-radius: 20px;
+      padding: 3px 10px 3px 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .tag button {
+      background: none;
+      border: none;
+      color: #5a9a8a;
+      cursor: pointer;
+      font-size: 0.9rem;
+      line-height: 1;
+      padding: 0 0 0 2px;
+    }
+    .tag button:hover { color: #c0392b; }
+    #ingredient-input {
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      min-width: 120px;
+      flex: 1;
+      background: transparent;
+      color: var(--text);
+    }
+    #ingredient-input::placeholder { color: #bbb; }
+
+    .hint-text {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── 옵션 행 ── */
+    .options-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .option-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .option-group label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    select {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    select:focus { border-color: var(--mint); }
+
+    /* ── 버튼 ── */
+    .btn-primary {
+      width: 100%;
+      margin-top: 16px;
+      background: linear-gradient(135deg, #6dd5c2, #5bc5b0);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(109, 213, 194, 0.4);
+    }
+    .btn-primary:disabled {
+      background: #d0d0d0;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-secondary {
+      background: var(--peach-light);
+      color: #c0392b;
+      border: 1.5px solid var(--peach);
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover:not(:disabled) { background: #ffddd8; }
+    .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── 상태 배너 ── */
+    .status-banner {
+      background: var(--yellow-light);
+      border: 1.5px solid var(--yellow);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: #7a6000;
+      margin-bottom: 16px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-banner.show { display: flex; }
+    .status-banner.success { background: var(--mint-light); border-color: var(--mint); color: #2d6a5a; }
+    .status-banner.error { background: #fff0ee; border-color: var(--peach); color: #a93226; }
+
+    /* ── 로딩 ── */
+    .loading-wrap {
+      text-align: center;
+      padding: 40px 20px;
+      display: none;
+    }
+    .loading-wrap.show { display: block; }
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--mint);
+      animation: bounce 1.2s infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; background: var(--peach); }
+    .dot:nth-child(3) { animation-delay: 0.4s; background: var(--yellow); }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+      40% { transform: scale(1.2); opacity: 1; }
+    }
+    .loading-text { color: var(--muted); font-size: 0.85rem; }
+
+    /* ── 결과 영역 ── */
+    #result-area { display: none; }
+    #result-area.show { display: block; }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .result-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ── 레시피 카드 ── */
+    .recipes-container { display: flex; flex-direction: column; gap: 16px; }
+    .recipe-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card-header {
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .card-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--mint-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .card-title-wrap { flex: 1; }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .card-meta {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .badge-age { background: var(--yellow-light); color: #7a6000; }
+    .badge-source { background: var(--peach-light); color: #a93226; }
+    .badge-ai { background: #f0eeff; color: #5b4a9e; }
+
+    .card-body { padding: 16px 20px; }
+    .recipe-section { margin-bottom: 14px; }
+    .recipe-section:last-child { margin-bottom: 0; }
+    .recipe-section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
+    }
+    .recipe-section-content {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .warning-box {
+      background: #fff9e6;
+      border: 1px solid var(--yellow);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      color: #7a6000;
+      line-height: 1.5;
+    }
+    .instagram-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.75rem;
+      color: #e1306c;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+    .instagram-link:hover { text-decoration: underline; }
+
+    /* ── 스트리밍 원시 출력 (파싱 전) ── */
+    #raw-stream {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      color: var(--text);
+      display: none;
+    }
+    #raw-stream.show { display: block; }
+
+    /* ── 스크랩 섹션 ── */
+    .scrape-section {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .scrape-info { font-size: 0.82rem; color: var(--muted); }
+    .scrape-info strong { color: var(--text); }
+
+    /* ── 빈 재료 힌트 ── */
+    .suggestion-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .suggestion-chip {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .suggestion-chip:hover {
+      border-color: var(--mint);
+      color: #2d6a5a;
+      background: var(--mint-light);
+    }
+
+    footer {
+      text-align: center;
+      color: #bbb;
+      font-size: 0.72rem;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">🍼 유아식 레시피 AI 추천</div>
+  <h1>아이밥상</h1>
+  <p>냉장고 재료를 넣으면 인스타그램 레시피를 찾아드려요</p>
+  <div class="accounts-row">
+    <a class="account-chip" href="https://www.instagram.com/ttowooyoung/" target="_blank">@ttowooyoung</a>
+    <a class="account-chip" href="https://www.instagram.com/danmom_shinhye/" target="_blank">@danmom_shinhye</a>
+    <a class="account-chip" href="https://www.instagram.com/jiyulpping/" target="_blank">@jiyulpping</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- 인스타 데이터 상태 -->
+  <div class="scrape-section">
+    <div class="scrape-info">
+      <span id="data-status">📊 인스타그램 레시피 데이터 확인 중...</span>
+    </div>
+    <button class="btn-secondary" id="scrape-btn" onclick="runScrape()" disabled>
+      🔄 레시피 새로고침
+    </button>
+  </div>
+
+  <!-- 상태 메시지 배너 -->
+  <div class="status-banner" id="status-banner">
+    <span id="status-text"></span>
+  </div>
+
+  <!-- 입력 카드 -->
+  <div class="input-card">
+    <div class="section-title">🥕 냉장고 재료 입력</div>
+    <div class="tag-input-wrap" id="tag-wrap" onclick="document.getElementById('ingredient-input').focus()">
+      <input id="ingredient-input" type="text" placeholder="재료 입력 후 Enter" autocomplete="off"/>
+    </div>
+    <div class="hint-text">Enter 또는 쉼표(,)로 재료 추가</div>
+
+    <div class="suggestion-chips" id="suggestions">
+      <span style="font-size:0.75rem;color:var(--muted);align-self:center;">자주 쓰는 재료:</span>
+    </div>
+
+    <div class="options-row">
+      <div class="option-group">
+        <label>👶 아이 월령</label>
+        <select id="baby-age">
+          <option value="5~6개월">5~6개월 (이유식 초기)</option>
+          <option value="7~8개월">7~8개월 (이유식 중기)</option>
+          <option value="9~11개월" selected>9~11개월 (이유식 후기)</option>
+          <option value="12~18개월">12~18개월 (완료기)</option>
+          <option value="18개월 이상">18개월 이상 (유아식)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="search-btn" onclick="searchRecipes()">
+      <span>🔍</span> 레시피 찾기
+    </button>
+  </div>
+
+  <!-- 로딩 -->
+  <div class="loading-wrap" id="loading">
+    <div class="dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="loading-text">인스타그램 레시피에서 재료를 매칭하는 중...</div>
+  </div>
+
+  <!-- 결과 -->
+  <div id="result-area">
+    <div class="result-header">
+      <div class="result-title" id="result-title">추천 레시피</div>
+      <button class="btn-secondary" onclick="clearResults()">✕ 초기화</button>
+    </div>
+    <div class="recipes-container" id="recipes-container"></div>
+  </div>
+
+  <!-- 스트리밍 원시 출력 (파싱 중 fallback) -->
+  <div id="raw-stream"></div>
+
+</main>
+
+<footer>
+  레시피 출처: @ttowooyoung · @danmom_shinhye · @jiyulpping | Powered by Claude AI
+</footer>
+
+<script>
+const SUGGESTIONS = ['당근', '감자', '고구마', '닭가슴살', '소고기', '브로콜리', '애호박', '두부', '달걀', '쌀', '시금치', '양파'];
+let tags = [];
+let isStreaming = false;
+
+// ── 재료 태그 ──
+const input = document.getElementById('ingredient-input');
+const tagWrap = document.getElementById('tag-wrap');
+
+// 자주 쓰는 재료 칩
+const sugWrap = document.getElementById('suggestions');
+SUGGESTIONS.forEach(s => {
+  const chip = document.createElement('button');
+  chip.className = 'suggestion-chip';
+  chip.textContent = s;
+  chip.onclick = () => addTag(s);
+  sugWrap.appendChild(chip);
+});
+
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const val = input.value.replace(/,/g, '').trim();
+    if (val) addTag(val);
+    input.value = '';
+  } else if (e.key === 'Backspace' && input.value === '' && tags.length > 0) {
+    removeTag(tags.length - 1);
+  }
+});
+input.addEventListener('input', () => {
+  if (input.value.includes(',')) {
+    const parts = input.value.split(',').map(s => s.trim()).filter(Boolean);
+    parts.forEach(p => addTag(p));
+    input.value = '';
+  }
+});
+
+function addTag(val) {
+  val = val.trim();
+  if (!val || tags.includes(val)) return;
+  tags.push(val);
+  renderTags();
+}
+function removeTag(idx) {
+  tags.splice(idx, 1);
+  renderTags();
+}
+function renderTags() {
+  // 기존 태그 제거
+  tagWrap.querySelectorAll('.tag').forEach(el => el.remove());
+  tags.forEach((t, i) => {
+    const tag = document.createElement('div');
+    tag.className = 'tag';
+    tag.innerHTML = `${t}<button onclick="removeTag(${i})">×</button>`;
+    tagWrap.insertBefore(tag, input);
+  });
+}
+
+// ── 상태 배너 ──
+function showBanner(msg, type = '') {
+  const b = document.getElementById('status-banner');
+  document.getElementById('status-text').textContent = msg;
+  b.className = 'status-banner show ' + type;
+}
+function hideBanner() {
+  document.getElementById('status-banner').className = 'status-banner';
+}
+
+// ── 인스타 데이터 상태 확인 ──
+async function checkStatus() {
+  try {
+    const res = await fetch('/api/status');
+    const data = await res.json();
+    const el = document.getElementById('data-status');
+    document.getElementById('scrape-btn').disabled = false;
+    if (data.total > 0) {
+      const accounts = Object.entries(data.by_account)
+        .map(([a, n]) => `@${a} ${n}개`)
+        .join(' · ');
+      el.innerHTML = `✅ <strong>${data.total}개</strong> 레시피 로드됨 (${accounts})`;
+    } else {
+      el.innerHTML = `⚠️ 스크랩된 레시피 없음 — <strong>레시피 새로고침</strong>을 눌러주세요`;
+    }
+  } catch (e) {
+    document.getElementById('data-status').textContent = '서버 연결 확인 필요';
+  }
+}
+
+// ── 스크랩 트리거 ──
+async function runScrape() {
+  const btn = document.getElementById('scrape-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ 스크랩 중...';
+  showBanner('📥 인스타그램 레시피를 수집하고 있습니다. 1~2분 소요될 수 있어요...', '');
+  try {
+    const res = await fetch('/api/scrape', { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      showBanner(`✅ ${data.total}개 레시피 수집 완료!`, 'success');
+      await checkStatus();
+    } else {
+      showBanner(`❌ 스크랩 실패: ${data.error}`, 'error');
+    }
+  } catch (e) {
+    showBanner('❌ 서버 오류가 발생했습니다', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🔄 레시피 새로고침';
+  }
+}
+
+// ── 레시피 검색 ──
+async function searchRecipes() {
+  if (isStreaming) return;
+  if (tags.length === 0) {
+    showBanner('재료를 먼저 입력해 주세요!', 'error');
+    return;
+  }
+  hideBanner();
+  clearResults(false);
+
+  const age = document.getElementById('baby-age').value;
+  const btn = document.getElementById('search-btn');
+  btn.disabled = true;
+  isStreaming = true;
+
+  document.getElementById('loading').classList.add('show');
+  document.getElementById('result-area').classList.remove('show');
+
+  let rawText = '';
+  const rawEl = document.getElementById('raw-stream');
+  rawEl.className = '';
+  rawEl.textContent = '';
+
+  try {
+    const res = await fetch('/api/recipes/stream', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ingredients: tags, baby_age: age })
+    });
+
+    document.getElementById('loading').classList.remove('show');
+    rawEl.className = 'show';
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value);
+      const lines = chunk.split('\n');
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const data = line.slice(6);
+          if (data === '[DONE]') {
+            rawEl.className = '';
+            parseAndRenderRecipes(rawText, age);
+            break;
+          }
+          try {
+            const parsed = JSON.parse(data);
+            rawText += parsed.text;
+            rawEl.textContent = rawText;
+          } catch {}
+        }
+      }
+    }
+  } catch (e) {
+    showBanner('레시피 검색 중 오류가 발생했습니다.', 'error');
+    document.getElementById('loading').classList.remove('show');
+  } finally {
+    btn.disabled = false;
+    isStreaming = false;
+    document.getElementById('result-title').textContent =
+      `🍽️ 추천 레시피 (${tags.join(', ')})`;
+  }
+}
+
+// ── 레시피 파싱 + 렌더 ──
+function parseAndRenderRecipes(text, age) {
+  const recipeBlocks = text.split('---RECIPE_START---').slice(1);
+  const container = document.getElementById('recipes-container');
+  container.innerHTML = '';
+
+  if (recipeBlocks.length === 0) {
+    // 파싱 실패 시 원문 표시
+    const card = document.createElement('div');
+    card.className = 'recipe-card';
+    card.innerHTML = `<div class="card-body"><div class="recipe-section-content">${escHtml(text)}</div></div>`;
+    container.appendChild(card);
+    document.getElementById('result-area').classList.add('show');
+    return;
+  }
+
+  const icons = ['🥕', '🍗', '🥦', '🍳', '🐟', '🥔'];
+  const colors = ['#e8f8f5', '#fff9e6', '#fff0ee', '#f0eeff'];
+
+  recipeBlocks.forEach((block, idx) => {
+    const content = block.split('---RECIPE_END---')[0].trim();
+    const recipe = parseRecipeBlock(content);
+    const card = buildRecipeCard(recipe, idx, icons, colors);
+    container.appendChild(card);
+  });
+
+  document.getElementById('result-area').classList.add('show');
+}
+
+function parseRecipeBlock(text) {
+  const get = (key) => {
+    const regex = new RegExp(`\\*\\*${key}\\*\\*\\s*[:：]?\\s*(.+?)(?=\\n\\*\\*|$)`, 's');
+    const m = text.match(regex);
+    return m ? m[1].trim() : '';
+  };
+  return {
+    name: get('레시피 이름') || get('이름'),
+    source: get('출처'),
+    age: get('월령'),
+    ingredients: get('재료'),
+    steps: get('조리법'),
+    nutrition: get('영양 포인트') || get('영양'),
+    warning: get('주의사항'),
+    raw: text,
+  };
+}
+
+function buildRecipeCard(r, idx, icons, colors) {
+  const card = document.createElement('div');
+  card.className = 'recipe-card';
+
+  const isInstagram = r.source && r.source.includes('@') && !r.source.includes('AI');
+  const accountMatch = r.source ? r.source.match(/@([\w.]+)/) : null;
+  const accountName = accountMatch ? accountMatch[1] : null;
+
+  const sourceBadge = isInstagram
+    ? `<span class="badge badge-source">📸 인스타 레시피</span>`
+    : `<span class="badge badge-ai">✨ AI 추천</span>`;
+
+  const ageBadge = r.age ? `<span class="badge badge-age">👶 ${r.age}</span>` : '';
+
+  const igLink = accountName
+    ? `<a class="instagram-link" href="https://www.instagram.com/${accountName}/" target="_blank">
+        📸 @${accountName} 원본 보기
+       </a>`
+    : '';
+
+  // 이름에서 이모지 추출 또는 기본 아이콘
+  const emojiMatch = r.name ? r.name.match(/[\u{1F300}-\u{1FFFF}]|[\u{2600}-\u{26FF}]/u) : null;
+  const icon = emojiMatch ? emojiMatch[0] : icons[idx % icons.length];
+  const iconBg = colors[idx % colors.length];
+
+  card.innerHTML = `
+    <div class="card-header">
+      <div class="card-icon" style="background:${iconBg}">${icon}</div>
+      <div class="card-title-wrap">
+        <div class="card-title">${escHtml(r.name || '레시피')}</div>
+        <div class="card-meta">
+          ${ageBadge}
+          ${sourceBadge}
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      ${r.ingredients ? `
+        <div class="recipe-section">
+          <div class="recipe-section-title">재료</div>
+          <div class="recipe-section-content">${escHtml(r.ingredients)}</div>
+        </div>` : ''}
+      ${r.steps ? `
+        <div class="recipe-section">
+          <div class="recipe-section-title">조리법</div>
+          <div class="recipe-section-content">${escHtml(r.steps)}</div>
+        </div>` : ''}
+      ${r.nutrition ? `
+        <div class="recipe-section">
+          <div class="recipe-section-title">영양 포인트</div>
+          <div class="recipe-section-content">${escHtml(r.nutrition)}</div>
+        </div>` : ''}
+      ${r.warning ? `
+        <div class="recipe-section">
+          <div class="warning-box">⚠️ ${escHtml(r.warning)}</div>
+        </div>` : ''}
+      ${igLink}
+    </div>`;
+
+  return card;
+}
+
+function clearResults(resetTags = true) {
+  document.getElementById('result-area').classList.remove('show');
+  document.getElementById('recipes-container').innerHTML = '';
+  document.getElementById('raw-stream').className = '';
+  document.getElementById('raw-stream').textContent = '';
+  hideBanner();
+  if (resetTags) {
+    tags = [];
+    renderTags();
+  }
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, '<br>');
+}
+
+// 초기화
+checkStatus();
+</script>
+</body>
+</html>
