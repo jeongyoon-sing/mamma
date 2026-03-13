@@ -50,6 +50,7 @@
     .result-title { font-size: 1rem; font-weight: 700; color: var(--text); }
     .recipes-container { display: flex; flex-direction: column; gap: 16px; }
     .recipe-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; animation: fadeIn 0.4s ease; }
+    .card-img { width: 100%; height: 180px; object-fit: cover; display: block; background: var(--mint-light); }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     .card-header { padding: 16px 20px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 12px; }
     .card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
@@ -136,6 +137,7 @@ const RECIPES = [
   {
     name: '🥕 당근 소고기 죽',
     age: '6개월 이상',
+    image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&h=300&fit=crop&auto=format',
     ingredients: ['당근','소고기','쌀'],
     steps: '1. 쌀을 30분 불린다\n2. 소고기를 다져 핏물 제거\n3. 당근을 곱게 다진다\n4. 쌀, 소고기, 당근을 냄비에 넣고 물 6배 부어 끓인다\n5. 약불에서 20분 저어가며 익힌다',
     nutrition: '철분(소고기) + 베타카로틴(당근)으로 빈혈 예방에 효과적',
@@ -144,6 +146,7 @@ const RECIPES = [
   {
     name: '🥦 브로콜리 닭죽',
     age: '7개월 이상',
+    image: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=600&h=300&fit=crop&auto=format',
     ingredients: ['브로콜리','닭가슴살','쌀'],
     steps: '1. 닭가슴살을 삶아 결대로 잘게 찢는다\n2. 브로콜리는 송이만 데쳐 다진다\n3. 불린 쌀에 닭육수 6배 넣고 끓인다\n4. 닭가슴살, 브로콜리 넣고 5분 더 끓인다',
     nutrition: '단백질(닭)과 비타민C(브로콜리) 조합으로 면역력 강화',
@@ -152,6 +155,7 @@ const RECIPES = [
   {
     name: '🎃 단호박 고구마 퓨레',
     age: '5개월 이상',
+    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=300&fit=crop&auto=format',
     ingredients: ['단호박','고구마'],
     steps: '1. 단호박, 고구마를 껍질 벗겨 찐다\n2. 완전히 부드럽게 익으면 으깬다\n3. 모유나 분유로 농도 조절\n4. 체에 내려 매끄럽게 만든다',
     nutrition: '베타카로틴과 식이섬유가 풍부해 변비 예방',
@@ -160,6 +164,7 @@ const RECIPES = [
   {
     name: '🐟 흰살생선 감자 매쉬',
     age: '7개월 이상',
+    image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&h=300&fit=crop&auto=format',
     ingredients: ['흰살생선','감자'],
     steps: '1. 감자를 쪄서 으깬다\n2. 흰살생선(대구, 동태 등)을 쪄서 가시 완전 제거\n3. 생선살을 곱게 으깬다\n4. 감자와 생선 섞어 분유로 농도 조절',
     nutrition: 'DHA(생선)가 두뇌 발달에 도움',
@@ -168,6 +173,7 @@ const RECIPES = [
   {
     name: '🍳 달걀 두부 스크램블',
     age: '9개월 이상',
+    image: 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=600&h=300&fit=crop&auto=format',
     ingredients: ['달걀','두부'],
     steps: '1. 두부를 키친타월로 물기 제거 후 으깬다\n2. 달걀을 풀어 두부와 섞는다\n3. 팬에 기름 약간 두르고 약불에서 스크램블\n4. 뭉치지 않게 저어가며 완전히 익힌다',
     nutrition: '완전단백질(달걀) + 식물성단백질(두부) 조합',
@@ -176,6 +182,7 @@ const RECIPES = [
   {
     name: '🍚 소고기 시금치 진밥',
     age: '9개월 이상',
+    image: 'https://images.unsplash.com/photo-1536304993881-ff86e0c9c4b5?w=600&h=300&fit=crop&auto=format',
     ingredients: ['소고기','시금치','쌀'],
     steps: '1. 소고기 다진 것을 볶는다\n2. 시금치를 데쳐 찬물에 헹군 후 다진다\n3. 밥을 지을 때 물을 1.5배로 늘려 진밥 짓기\n4. 완성된 진밥에 소고기, 시금치 올린다',
     nutrition: '철분(소고기+시금치) 조합으로 흡수율 극대화',
@@ -184,6 +191,7 @@ const RECIPES = [
   {
     name: '🥑 아보카도 바나나 퓨레',
     age: '6개월 이상',
+    image: 'https://images.unsplash.com/photo-1631898039953-ef8c7f3e4c16?w=600&h=300&fit=crop&auto=format',
     ingredients: ['아보카도','바나나'],
     steps: '1. 아보카도 반 개를 으깬다\n2. 바나나 반 개를 으깬다\n3. 둘을 잘 섞는다\n4. 즉시 먹인다 (갈변 주의)',
     nutrition: '건강한 지방(아보카도)으로 뇌 발달 촉진',
@@ -192,6 +200,7 @@ const RECIPES = [
   {
     name: '🍎 사과 당근 스무디',
     age: '6개월 이상',
+    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&h=300&fit=crop&auto=format',
     ingredients: ['사과','당근'],
     steps: '1. 사과, 당근 껍질 벗겨 작게 자른다\n2. 쪄서 완전히 부드럽게 만든다\n3. 믹서에 갈아 체에 내린다\n4. 모유나 분유로 농도 조절',
     nutrition: '비타민A + 비타민C 조합으로 면역력 강화',
@@ -200,6 +209,7 @@ const RECIPES = [
   {
     name: '🫘 두부 양파 볶음',
     age: '10개월 이상',
+    image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=300&fit=crop&auto=format',
     ingredients: ['두부','양파'],
     steps: '1. 두부를 물기 제거 후 1cm 크기로 자른다\n2. 양파를 잘게 다진다\n3. 팬에 기름 두르고 양파 먼저 투명해질 때까지 볶기\n4. 두부 넣고 부서지지 않게 살살 볶는다',
     nutrition: '이소플라본(두부)과 퀘르세틴(양파)으로 면역력 강화',
@@ -208,6 +218,7 @@ const RECIPES = [
   {
     name: '🐔 닭가슴살 감자 수프',
     age: '9개월 이상',
+    image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&h=300&fit=crop&auto=format',
     ingredients: ['닭가슴살','감자','양파'],
     steps: '1. 닭가슴살을 작게 썰어 끓는 물에 삶는다\n2. 감자, 양파를 작게 자른다\n3. 닭육수에 감자, 양파 넣고 푹 끓인다\n4. 부드러워지면 닭가슴살 넣고 5분 더 끓인다',
     nutrition: '고단백 저지방 수프로 성장 발달에 좋음',
@@ -216,6 +227,7 @@ const RECIPES = [
   {
     name: '🥬 시금치 달걀 볶음밥',
     age: '12개월 이상',
+    image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&h=300&fit=crop&auto=format',
     ingredients: ['시금치','달걀','쌀'],
     steps: '1. 시금치를 데쳐 물기 짜고 잘게 썬다\n2. 달걀을 풀어둔다\n3. 팬에 기름 두르고 밥 볶다가 달걀 넣기\n4. 시금치 넣고 볶는다\n5. 참기름 한 방울로 마무리',
     nutrition: '철분(시금치)과 단백질(달걀)의 균형잡힌 한 끼',
@@ -224,6 +236,7 @@ const RECIPES = [
   {
     name: '🎋 애호박 새우 죽',
     age: '10개월 이상',
+    image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&h=300&fit=crop&auto=format',
     ingredients: ['애호박','새우','쌀'],
     steps: '1. 새우는 내장 제거 후 잘게 다진다\n2. 애호박을 작게 다진다\n3. 불린 쌀에 물 6배 넣고 끓인다\n4. 새우, 애호박 넣고 15분 더 끓인다',
     nutrition: '타우린(새우)으로 두뇌 발달 도움',
@@ -232,6 +245,7 @@ const RECIPES = [
   {
     name: '🍠 고구마 사과 퓨레',
     age: '5개월 이상',
+    image: 'https://images.unsplash.com/photo-1576097449798-7c7f90e1248a?w=600&h=300&fit=crop&auto=format',
     ingredients: ['고구마','사과'],
     steps: '1. 고구마를 쪄서 껍질 제거\n2. 사과를 쪄서 부드럽게 만든다\n3. 둘을 함께 으깨어 섞는다\n4. 모유/분유로 원하는 농도로 맞춘다',
     nutrition: '식이섬유가 풍부해 변비 예방에 효과적',
@@ -240,6 +254,7 @@ const RECIPES = [
   {
     name: '🥩 소고기 감자 조림',
     age: '12개월 이상',
+    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=300&fit=crop&auto=format',
     ingredients: ['소고기','감자','양파'],
     steps: '1. 소고기를 작은 큐브로 자른다\n2. 감자, 양파를 같은 크기로 자른다\n3. 냄비에 소고기 먼저 볶다가 채소 추가\n4. 물 1/2컵 넣고 뚜껑 덮어 약불 15분',
     nutrition: '탄수화물(감자) + 단백질(소고기)의 균형',
@@ -248,6 +263,7 @@ const RECIPES = [
   {
     name: '🫐 블루베리 바나나 스무디',
     age: '8개월 이상',
+    image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&h=300&fit=crop&auto=format',
     ingredients: ['블루베리','바나나'],
     steps: '1. 블루베리 씻어서 준비\n2. 바나나 적당히 자른다\n3. 믹서에 함께 갈기\n4. 필요시 모유/분유 첨가',
     nutrition: '안토시아닌(블루베리) + 칼륨(바나나)으로 항산화 효과',
@@ -256,6 +272,7 @@ const RECIPES = [
   {
     name: '🥕 당근 양파 퓨레',
     age: '6개월 이상',
+    image: 'https://images.unsplash.com/photo-1445282768818-728615cc910a?w=600&h=300&fit=crop&auto=format',
     ingredients: ['당근','양파'],
     steps: '1. 당근, 양파를 쪄서 부드럽게 만든다\n2. 믹서에 넣고 곱게 간다\n3. 체에 내려 섬유질 제거\n4. 모유/분유로 농도 조절',
     nutrition: '베타카로틴(당근) + 항산화(양파)로 면역력 강화',
@@ -264,6 +281,7 @@ const RECIPES = [
   {
     name: '🍗 닭고기 브로콜리 덮밥',
     age: '12개월 이상',
+    image: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600&h=300&fit=crop&auto=format',
     ingredients: ['닭가슴살','브로콜리','쌀'],
     steps: '1. 닭가슴살을 작게 다져 볶는다\n2. 브로콜리를 데쳐 잘게 자른다\n3. 밥 위에 닭가슴살과 브로콜리 얹는다\n4. 참기름 한 방울 뿌린다',
     nutrition: '고단백 식사로 성장기에 이상적',
@@ -272,6 +290,7 @@ const RECIPES = [
   {
     name: '🥚 달걀 찜',
     age: '9개월 이상',
+    image: 'https://images.unsplash.com/photo-1607690424560-35d967d6ad7b?w=600&h=300&fit=crop&auto=format',
     ingredients: ['달걀'],
     steps: '1. 달걀 2개를 잘 푼다\n2. 달걀 양의 1.5배 물 추가\n3. 체에 내려 기포 제거\n4. 찜기에 넣고 약불로 12~15분 찐다',
     nutrition: '완전식품인 달걀로 균형잡힌 영양 공급',
@@ -280,6 +299,7 @@ const RECIPES = [
   {
     name: '🫚 두부 미음',
     age: '6개월 이상',
+    image: 'https://images.unsplash.com/photo-1571748982800-fa51082c2224?w=600&h=300&fit=crop&auto=format',
     ingredients: ['두부','쌀'],
     steps: '1. 쌀을 1시간 불린다\n2. 믹서에 불린 쌀과 물(10배) 갈기\n3. 냄비에 끓이며 저어준다\n4. 끓으면 으깬 두부 추가 후 3분 더',
     nutrition: '부드러운 식감으로 소화 흡수 용이',
@@ -288,6 +308,7 @@ const RECIPES = [
   {
     name: '🍌 바나나 오트밀',
     age: '8개월 이상',
+    image: 'https://images.unsplash.com/photo-1495214783159-3503fd1b572d?w=600&h=300&fit=crop&auto=format',
     ingredients: ['바나나','오트밀'],
     steps: '1. 오트밀을 모유/분유로 불린다\n2. 바나나를 포크로 으깬다\n3. 오트밀에 바나나 섞기\n4. 전자레인지 1분 30초 가열',
     nutrition: '복합탄수화물(오트밀)로 에너지 지속 공급',
@@ -399,6 +420,7 @@ function searchRecipes() {
       const card = document.createElement('div');
       card.className = 'recipe-card';
       card.innerHTML = `
+        ${r.image ? `<img class="card-img" src="${r.image}" alt="${r.name}" loading="lazy" onerror="this.style.display='none'">` : ''}
         <div class="card-header">
           <div class="card-icon" style="background:${colors[idx % colors.length]}">${r.name.match(/[\u{1F300}-\u{1FFFF}]|[\u{2600}-\u{26FF}]/u)?.[0] || '🍽️'}</div>
           <div class="card-title-wrap">
