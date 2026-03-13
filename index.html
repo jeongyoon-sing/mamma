@@ -312,6 +312,7 @@ SUGGESTIONS_LIST.forEach(s => {
 });
 
 input.addEventListener('keydown', e => {
+  if (e.isComposing) return;
   if (e.key === 'Enter' || e.key === ',') {
     e.preventDefault();
     const val = input.value.replace(/,/g, '').trim();
