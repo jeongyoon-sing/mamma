@@ -107,9 +107,9 @@
           <option value="all">전체</option>
           <option value="5~6개월">5~6개월 (이유식 초기)</option>
           <option value="7~8개월">7~8개월 (이유식 중기)</option>
-          <option value="9~11개월" selected>9~11개월 (이유식 후기)</option>
+          <option value="9~11개월">9~11개월 (이유식 후기)</option>
           <option value="12~18개월">12~18개월 (완료기)</option>
-          <option value="18개월 이상">18개월 이상 (유아식)</option>
+          <option value="18개월 이상" selected>18개월 이상 (유아식)</option>
         </select>
       </div>
     </div>
@@ -397,7 +397,7 @@ function searchRecipes() {
     ).length;
     return { ...recipe, matchCount };
   })
-  .filter(r => r.matchCount > 0)
+  .filter(r => r.matchCount >= 2)
   .sort((a, b) => b.matchCount - a.matchCount);
 
   // 월령 필터
